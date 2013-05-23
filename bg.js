@@ -12,6 +12,7 @@ function sendPost(info, tab) {
   } else {
     postData.type = "IMAGE";
   }
+
   postData.url = info.srcUrl;
 
   var post = $.post('http://api.dogfort.io/posting/?api_key=' + localStorage['dogfort_apiToken'], postData)
