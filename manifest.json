@@ -1,23 +1,26 @@
 {
-  "name":"dogfort",
-  "version":"0.3",
-  "manifest_version":2,
-  "description":"Share images and video with your asshole friends.",
-  "icons":{
-    "128":"img/icon_128.png"
+  "name": "dogfort",
+  "version": "0.4",
+  "manifest_version": 2,
+  "description": "Share images and video with your asshole friends.",
+  "icons": {
+    "128": "img/icon_128.png",
+    "48": "img/icon_48.png"
   },
-  "browser_action":{
-    "default_icon":"img/icon_128.png",
-    "default_title":"dogfort",
-    "default_popup":"popup.html"
+  "browser_action": {
+    "default_icon": {
+      "38": "img/icon_48.png",
+      "19": "img/icon_48.png"
+    },
+    "default_title": "dogfort",
+    "default_popup": "popup.html"
   },
-  "background":{
-    "scripts":["jquery.js", "bg.js"]
+  "background": {
+    "scripts": ["jquery.js", "bg.js"]
   },
-  "permissions":[
+  "permissions": [
     "contextMenus",
     "tabs",
     "cookies",
-    "http://api.dogfort.io/*"
-  ]
+    "http://api.dogfort.io/*"]
 }
