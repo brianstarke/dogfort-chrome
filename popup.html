@@ -12,13 +12,21 @@
             font-size: 16px;
         }
     </style>
-    <script src='jquery.js' type='text/javascript'></script>
+    <script src='jquery.min.js' type='text/javascript'></script>
     <script src='popup.js' type='text/javascript'></script>
 </head>
 <body>
-<label for='apiToken'>apiToken</label>
-<input id='apiToken' type="text" size="45">
-<button id="save_login_info">save</button>
-<br>
+  <div id='login_form'>
+    <label for='username'>username</label>
+    <input id='username' type="text" size="45">
+    <label for='password'>password</label>
+    <input id='password' type="password" size="45">
+    <button id='login'>login</button>
+  </div>
+  <div id='logged_in', style='display:none; width:200px;'>
+    <span id='logged_in_msg'></span>
+    <br>
+    <button id='logout'>logout</button>
+  </div>
 </body>
 </html>

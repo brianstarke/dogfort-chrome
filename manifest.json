@@ -1,6 +1,6 @@
 {
   "name": "dogfort",
-  "version": "0.5",
+  "version": "0.6",
   "manifest_version": 2,
   "description": "Share images and video with your asshole friends.",
   "icons": {
@@ -16,11 +16,13 @@
     "default_popup": "popup.html"
   },
   "background": {
-    "scripts": ["jquery.js", "bg.js"]
+    "scripts": ["jquery.min.js", "bg.js"]
   },
   "permissions": [
     "contextMenus",
     "tabs",
     "cookies",
-    "http://api.dogfort.io/*"]
+    "http://dogfort.io/*",
+    "http://localhost:9000/*"],
+  "content_security_policy": "script-src 'self' https://ajax.googleapis.com; object-src 'self'"
 }

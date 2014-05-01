@@ -1,35 +1,54 @@
-var createProperties = {
-  title: "Send to dogfort",
-  contexts: ["image", "video"],
-  onclick: sendPost
-};
+var dogfortMainMenu = {
+  title: "send to dogfort channel",
+  contexts: ["image"],
+  id: "dogfort"
+}
 
-function sendPost(info, tab) {
-  var postData = {};
-
-  if (info.mediaType === 'video') {
-    if(info.pageUrl.indexOf('youtube.com' > -1)){
-      postData.type = "YOUTUBE";
-      var idx = info.pageUrl.indexOf('watch?v=') + 8;
-      postData.url = info.pageUrl.substr(idx, 11);
+function refreshChannels() {
+  $.ajax({
+    url:'http://dogfort.io/api/v1/channels/user/' + localStorage['dogfort_userid'],
+    headers: {
+      'Authorization': localStorage['dogfort_token']
     }
-  } else {
-    postData.type = "IMAGE";
-    postData.url = info.srcUrl;
-  }
+  }).success(function(data){
+    chrome.contextMenus.removeAll();
+    chrome.contextMenus.create(dogfortMainMenu);
 
-  console.log(postData);
+    for(var n in data.channels) {
+      var subMenu = {
+        title: data.channels[n].name,
+        contexts: ["image"],
+        parentId: 'dogfort',
+        id: data.channels[n].uid,
+        onclick: sendPost
+      }
 
-  var post = $.post('http://api.dogfort.io/posting/?api_key=' + localStorage['dogfort_apiToken'], postData)
-    .fail(function(data) {
-    if (data.status === 400) {
-      alert(data.responseText);
-    }
-
-    if (data.status === 401) {
-      alert(data.responseText);
+      chrome.contextMenus.create(subMenu);
     }
   });
 }
 
-chrome.contextMenus.create(createProperties);
+var dogfortSep = {
+  contexts: ["image"],
+  type: "separator",
+  parentId: "dogfort"
+}
+
+function sendPost(info, tab) {
+  message = JSON.stringify({
+    channelId: info.menuItemId,
+    userId: localStorage['dogfort_userid'],
+    text: info.srcUrl
+  });
+
+  $.ajax({
+    url:'http://dogfort.io/api/v1/messages',
+    type: 'POST',
+    headers: {
+      'Authorization': localStorage['dogfort_token']
+    },
+    data: message
+  });
+}
+
+refreshChannels();
